@@ -2,5 +2,5 @@
 
 void hello()
 {
-    std::cout << "Hello World" << std::endl;
+    std::cout << "Hello World Shared" << std::endl;
 }
