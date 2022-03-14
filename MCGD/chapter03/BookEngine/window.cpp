@@ -26,7 +26,6 @@
 
 namespace BookEngine
 {
-
 	Window::Window()
 	{
 	}
@@ -62,18 +61,25 @@ namespace BookEngine
 											screenHeight,
 											flags);
 			if (m_SDL_Window == nullptr)
+			{
+				WriteLog(LogType::ERROR, SDL_GetError());
 				throw Exception("SDL Window could not be created!");
+			}
 
 			// Set up our OpenGL context
 			SDL_GLContext glContext = SDL_GL_CreateContext(m_SDL_Window);
-
 			if (glContext == nullptr)
+			{
+				WriteLog(LogType::ERROR, SDL_GetError());
 				throw Exception("SDL_GL context could not be created!");
+			}
 
 			// Set up GLEW (optional)
 			GLenum error = glewInit();
 			if (error != GLEW_OK)
-				throw("Could not initialize glew!");
+			{
+				throw Exception("Could not initialize glew!");
+			}
 
 			// print some log info
 			std::string versionNumber = (const char *)glGetString(GL_VERSION);

@@ -52,14 +52,14 @@ void GameplayScreen::OnExit()
 
 void GameplayScreen::Update()
 {
-    std::cout << "Update\n";
+    // std::cout << "Update\n";
     CheckInput();
 }
 
 void GameplayScreen::Draw()
 {
-    std::cout << "Draw\n";
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    // std::cout << "Draw\n";
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
