@@ -64,6 +64,7 @@ Also, to link sfml library into your code use 'pkg-config --libs sfml-all' along
 ```
 sudo apt install libsdl2-dev libsdl2-doc
 ```
+For more information visit https://wiki.libsdl.org/FrontPage
 ## Set Environment Variables
 Add the following line to ~/.bashrc
 ```
