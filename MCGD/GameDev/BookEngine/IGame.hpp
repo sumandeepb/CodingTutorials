@@ -38,12 +38,17 @@ namespace BookEngine
         IGame();
         virtual ~IGame();
 
+        // Runs and Initializes the game
         void Run();
-        void ExitGame();
+        // Exits the game
+        void Exit();
 
+        // Called on Initialization
         virtual void OnInit() = 0;
+        // Called when exiting
         virtual void OnExit() = 0;
 
+        // For adding all screens
         virtual void AddScreens() = 0;
 
         void OnSDLEvent(SDL_Event &event);
@@ -53,10 +58,15 @@ namespace BookEngine
             return m_fps;
         }
 
+        InputManager GetInputManager() { return m_inputManager; };
+
     protected:
         bool Init();
+        bool InitSystems();
 
+        // Custom update function
         virtual void Update();
+        // Custom render function
         virtual void Draw();
 
         std::unique_ptr<ScreenList> m_screenList = nullptr;
@@ -65,5 +75,6 @@ namespace BookEngine
         InputManager m_inputManager;
         bool m_isRunning = false;
         float m_fps = 0.0f;
+        float m_deltaTime = 0.0f;
     };
 }

@@ -20,33 +20,14 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
-
-#include <vector>
+#include "ResourceManager.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
+    TextureCache ResourceManager::m_textureCache;
 
-    class ScreenList
+    GLTexture ResourceManager::GetTexture(std::string texturePath)
     {
-    public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
-    };
+        return m_textureCache.GetTexture(texturePath);
+    }
 }

@@ -7,9 +7,10 @@ find_package(SDL2 REQUIRED)
 set(OpenGL_GL_PREFERENCE LEGACY)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(Bullet REQUIRED)
 
-include_directories(${SDL2_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${BULLET_INCLUDE_DIRS})
 
 add_library(BookEngine SHARED ${SOURCES})
 
-target_link_libraries(BookEngine ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(BookEngine ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${BULLET_LIBRARIES})

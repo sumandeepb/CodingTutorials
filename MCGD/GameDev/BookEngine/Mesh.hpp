@@ -23,30 +23,30 @@
 #pragma once
 
 #include <vector>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include "GLTexture.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    class Mesh
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        Mesh();
+        ~Mesh();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        void Init(std::string pathToMesh, std::string pathToTexture);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        void Draw();
 
-        void Destroy();
+    private:
+        GLuint m_vao;
+        GLuint m_vertexbuffer;
+        GLuint m_uvbuffer;
+        GLTexture m_texture;
 
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+        std::vector<glm::vec3> m_vertices;
+        std::vector<glm::vec2> m_uvs;
+        std::vector<glm::vec3> m_normals;
     };
 }

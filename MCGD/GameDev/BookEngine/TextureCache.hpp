@@ -22,31 +22,21 @@
 
 #pragma once
 
-#include <vector>
+#include <map>
+#include "GLTexture.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // This caches the textures so that multiple sprites can use the same textures
+    class TextureCache
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        TextureCache();
+        ~TextureCache();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        GLTexture GetTexture(std::string texturePath);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+    private:
+        std::map<std::string, GLTexture> m_textureMap;
     };
 }

@@ -35,48 +35,47 @@ namespace BookEngine
         Destroy();
     }
 
-    IScreen *ScreenList::MoveToNextScreen()
+    IScreen *ScreenList::MoveToNext()
     {
-        IScreen *currentScreen = GetCurrentScreen();
+        IScreen *currentScreen = GetCurrent();
 
         if (currentScreen->GetNextScreenIndex() != SCREENINDEX_NO_SCREEN)
         {
             m_currentScreenIndex = currentScreen->GetNextScreenIndex();
         }
 
-        return GetCurrentScreen();
+        return GetCurrent();
     }
 
-    IScreen *ScreenList::MoveToPreviousScreen()
+    IScreen *ScreenList::MoveToPrevious()
     {
-        IScreen *currentScreen = GetCurrentScreen();
+        IScreen *currentScreen = GetCurrent();
 
         if (currentScreen->GetPreviousScreenIndex() != SCREENINDEX_NO_SCREEN)
         {
             m_currentScreenIndex = currentScreen->GetPreviousScreenIndex();
         }
 
-        return GetCurrentScreen();
+        return GetCurrent();
     }
 
-    IScreen *ScreenList::GetCurrentScreen()
+    IScreen *ScreenList::GetCurrent()
     {
         if (m_currentScreenIndex == SCREENINDEX_NO_SCREEN)
         {
-            // Error
             return nullptr;
         }
         return m_screens[m_currentScreenIndex];
     }
 
-    void ScreenList::SetCurrentScreen(int nextScreen)
+    void ScreenList::SetCurrent(int nextScreen)
     {
         m_currentScreenIndex = nextScreen;
     }
 
     void ScreenList::AddScreen(IScreen *newScreen)
     {
-        newScreen->m_screenIndex = m_screens.size(); // set index correctly
+        newScreen->m_screenIndex = m_screens.size();
         m_screens.push_back(newScreen);
         newScreen->Build();
         newScreen->SetParentGame(m_game);
@@ -86,7 +85,10 @@ namespace BookEngine
     {
         for (size_t i = 0; i < m_screens.size(); i++)
         {
-            m_screens[i]->Destroy();
+            if (m_screens.size() != 0)
+            {
+                m_screens[i]->Destroy();
+            }
         }
         m_screens.resize(0);
         m_currentScreenIndex = SCREENINDEX_NO_SCREEN;

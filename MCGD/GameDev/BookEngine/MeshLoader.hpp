@@ -22,31 +22,11 @@
 
 #pragma once
 
-#include <vector>
-
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
-    {
-    public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
-    };
+    bool LoadOBJ(
+        const std::string path,
+        std::vector<glm::vec3> &out_vertices,
+        std::vector<glm::vec2> &out_uvs,
+        std::vector<glm::vec3> &out_normals);
 }

@@ -34,10 +34,10 @@ namespace BookEngine
 
     void InputManager::Update()
     {
-
-        for (auto &iter : m_keyMap)
+        // Loop through _keyMap using a for each loop, and copy it over to _previousKeyMap
+        for (auto &it : m_keyMap)
         {
-            m_previousKeyMap[iter.first] = iter.second; // copy over keymap to previous keymap
+            m_previousKeyMap[it.first] = it.second;
         }
     }
 
@@ -60,12 +60,18 @@ namespace BookEngine
         // So we do it manually
         auto key = m_keyMap.find(keyID);
         if (key != m_keyMap.end())
+        {
             return key->second; // Found the key
-        return false;
+        }
+        else
+        {
+            return false; // Didn't find the key
+        }
     }
 
     bool InputManager::isKeyPressed(unsigned int keyID)
     {
+        // Check if it is pressed this frame, and wasn't pressed last frame
         if (isKeyDown(keyID) && !wasKeyDown(keyID))
         {
             return true;
@@ -78,10 +84,17 @@ namespace BookEngine
         // We dont want to use the associative array approach here
         // because we don't want to create a key if it doesnt exist.
         // So we do it manually
-        auto key = m_previousKeyMap.find(keyID);
-        if (key != m_previousKeyMap.end())
-            return key->second; // Found the key
-        return false;
+        auto it = m_previousKeyMap.find(keyID);
+        if (it != m_previousKeyMap.end())
+        {
+            // Found the key
+            return it->second;
+        }
+        else
+        {
+            // Didn't find the key
+            return false;
+        }
     }
 
     void InputManager::SetMouseCoords(float x, float y)

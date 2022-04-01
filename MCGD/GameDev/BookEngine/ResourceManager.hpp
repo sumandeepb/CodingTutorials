@@ -22,31 +22,19 @@
 
 #pragma once
 
-#include <vector>
+#include <string>
+#include "TextureCache.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // This is a way for us to access all our resources, such as
+    // Models or textures.
+    class ResourceManager
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        static GLTexture GetTexture(std::string texturePath);
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+    private:
+        static TextureCache m_textureCache;
     };
 }

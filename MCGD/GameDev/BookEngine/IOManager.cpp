@@ -26,28 +26,30 @@
 
 namespace BookEngine
 {
-    void IOManager::ReadFileToBuffer(std::vector<unsigned char> &buffer, std::string pathToFile)
+    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
     {
-        std::ifstream file(pathToFile.c_str(), std::ios::in | std::ios::binary | std::ios::ate);
-
-        // Get filesize
-        std::streamsize size = 0;
-        if (file.seekg(0, std::ios::end).good())
-            size = file.tellg();
-        if (file.seekg(0, std::ios::beg).good())
-            size -= file.tellg();
-
-        // Read contents of the file into the vector
-        if (size > 0)
+        std::ifstream file(filePath, std::ios::binary);
+        if (file.fail())
         {
-            buffer.resize((size_t)size);
-            file.read((char *)(&buffer[0]), size);
+            perror(filePath.c_str());
+            // TODO: throw Exception("Failure to read file to buffer");
+            return false;
         }
-        else
-        {
-            buffer.clear();
-            file.close();
-            throw Exception("Failure to read file to buffer");
-        }
+
+        // seek to the end
+        file.seekg(0, std::ios::end);
+
+        // Get the file size
+        unsigned int fileSize = (unsigned int)file.tellg();
+        file.seekg(0, std::ios::beg);
+
+        // Reduce the file size by any header bytes that might be present
+        fileSize -= (unsigned int)file.tellg();
+
+        buffer.resize(fileSize);
+        file.read((char *)&(buffer[0]), fileSize);
+        file.close();
+
+        return true;
     }
 }

@@ -24,22 +24,36 @@
 
 namespace BookEngine
 {
+    // Calculates FPS and also limits FPS
     class FPSLimiter
     {
     public:
         FPSLimiter();
 
+        // Initializes the FPS limiter. For now, this is
+        // analogous to setMaxFPS
         void Init(float maxFPS);
-        void Begin();
+
+        // Sets the desired max FPS
         void SetMaxFPS(float maxFPS);
 
-        float End(); // returns FPS
+        void Begin();
+
+        // end() will return the current FPS as a float
+        float End();
+
+        float deltaTime = 0.0f;
 
     private:
-        void CalcFPS();
-        float m_maxFPS;
-        unsigned int m_startTicks;
+        // Calculates the current FPS
+        void CalculateFPS();
+
+        // Variables
         float m_fps;
+        float m_maxFPS;
         float m_frameTime;
+        unsigned int m_startTicks;
+        float lastDeltaTime = 0.0f;
+        float nowDeltaTime = 0.0f;
     };
 }

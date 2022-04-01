@@ -22,31 +22,31 @@
 
 #pragma once
 
-#include <vector>
+#include <string>
+#include <GL/glew.h>
+#include "GLTexture.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // A 2D quad that can be rendered to the screen
+    class Sprite
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        Sprite();
+        ~Sprite();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        void Init(float x, float y, float width, float height, std::string texturePath);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        void Draw();
 
-        void Destroy();
+        // private:
+        float _x;
+        float _y;
+        float _width;
+        float _height;
 
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+        GLuint m_vao;
+        GLuint _vboID;
+        GLTexture _texture;
     };
 }

@@ -22,31 +22,51 @@
 
 #pragma once
 
-#include <vector>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // Camera class for 2D games
+    class Camera2D
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        Camera2D();
+        ~Camera2D();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        // sets up the orthographic matrix and screen dimensions
+        void Init(int screenWidth, int screenHeight);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        // updates the camera matrix if needed
+        void Update();
 
-        void Destroy();
+        glm::vec2 ConvertScreenToWorld(glm::vec2 screenCoords);
 
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+        bool InView(const glm::vec2 &position, const glm::vec2 &dimensions);
+
+        // setters
+        void SetPosition(const glm::vec2 &newPosition)
+        {
+            m_position = newPosition;
+            m_needsMatrixUpdate = true;
+        }
+        void SetScale(float newScale)
+        {
+            m_scale = newScale;
+            m_needsMatrixUpdate = true;
+        }
+
+        // getters
+        glm::vec2 GetPosition() { return m_position; }
+        float GetScale() { return m_scale; }
+        glm::mat4 GetCameraMatrix() { return m_cameraMatrix; }
+
+    private:
+        int m_screenWidth, m_screenHeight;
+        bool m_needsMatrixUpdate;
+        float m_scale;
+        glm::vec2 m_position;
+        glm::mat4 m_cameraMatrix;
+        glm::mat4 m_orthoMatrix;
     };
 }

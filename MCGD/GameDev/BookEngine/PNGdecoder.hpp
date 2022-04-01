@@ -26,27 +26,11 @@
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
-    {
-    public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
-    };
+    extern int DecodePNG(
+        std::vector<unsigned char> &out_image,
+        unsigned long &image_width,
+        unsigned long &image_height,
+        const unsigned char *in_png,
+        size_t in_size,
+        bool convert_to_rgba32 = true);
 }

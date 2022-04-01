@@ -22,31 +22,16 @@
 
 #pragma once
 
-#include <vector>
+#include <bullet/btBulletDynamicsCommon.h>
+#include <bullet/LinearMath/btVector3.h>
+#include <bullet/LinearMath/btAlignedObjectArray.h>
+#include "Mesh.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    class IGameObject
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+    private:
     };
 }

@@ -62,7 +62,8 @@ For more information visit https://www.sfml-dev.org/tutorials/2.5/start-linux.ph
 Also, to link sfml library into your code use 'pkg-config --libs sfml-all' along with your g++ command.
 ## Install SDL(Simple DirectMedia Layer) on Ubuntu
 ```
-sudo apt install libsdl2-dev libsdl2-doc
+sudo apt install libsdl2-dev libsdl2-doc \
+    libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev libsdl2-mixer-dev libsdl2-net-dev
 ```
 For more information visit https://wiki.libsdl.org/FrontPage
 ## Set Environment Variables

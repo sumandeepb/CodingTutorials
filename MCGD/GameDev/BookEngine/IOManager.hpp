@@ -29,6 +29,6 @@ namespace BookEngine
     class IOManager
     {
     public:
-        static void ReadFileToBuffer(std::vector<unsigned char> &buffer, std::string pathToFile);
+        static bool ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer);
     };
 }

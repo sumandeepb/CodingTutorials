@@ -26,27 +26,22 @@
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
+    class ParticleBatch2D;
+    class SpriteBatch;
 
-    class ScreenList
+    class ParticleManager2D
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        ParticleManager2D();
+        ~ParticleManager2D();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        // ParticleManager is responsible for cleaning up allocations
+        void CreateParticleBatch(ParticleBatch2D *particleBatch);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        void Update(float deltaTime);
+        void Draw(SpriteBatch *spriteBatch);
 
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+    private:
+        std::vector<ParticleBatch2D *> m_batches;
     };
 }

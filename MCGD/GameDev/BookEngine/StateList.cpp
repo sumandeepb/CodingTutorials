@@ -20,33 +20,12 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+#include "StateList.hpp"
 
-#include <vector>
-
-namespace BookEngine
+StateList::StateList()
 {
-    class IGame;
-    class IScreen;
+}
 
-    class ScreenList
-    {
-    public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
-    };
+StateList::~StateList()
+{
 }

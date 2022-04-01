@@ -1,0 +1,3 @@
+[submodule "MCGD/GameDev/BulletPhysics"]
+	path = MCGD/GameDev/BulletPhysics
+	url = git@github.com:bulletphysics/bullet3.git

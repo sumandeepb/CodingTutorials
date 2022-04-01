@@ -22,31 +22,17 @@
 
 #pragma once
 
-#include <vector>
+#include "GLTexture.hpp"
+
+#include <string>
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // Loads images into GLTextures
+    class ImageLoader
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
-
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
-
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
-
-        void Destroy();
-
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+        static GLTexture LoadPNG(std::string filePath);
+        static GLTexture LoadDDS(const char *imagepath);
     };
 }

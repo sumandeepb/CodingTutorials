@@ -28,11 +28,13 @@
 
 namespace BookEngine
 {
-    enum WindowFlags // Used for bitwise passing
+    enum WindowFlags
     {
         INVISIBLE = 0x1,
         FULLSCREEN = 0x2,
-        BORDERLESS = 0x4
+        BORDERLESS = 0x4,
+        RESIZABLE = 0x8,
+        FULLSCREEN_DESKTOP = 0x16
     };
 
     class Window
@@ -42,12 +44,21 @@ namespace BookEngine
         ~Window();
 
         int Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags);
-        int GetScreenWidth() { return m_screenWidth; }
-        int GetScreenHeight() { return m_screenHeight; }
+
         void SwapBuffer();
 
+        int GetScreenWidth() { return m_screenWidth; }
+        int GetScreenHeight() { return m_screenHeight; }
+
+        void ToggleFullScreen();
+
+        void OnWindowEvent(SDL_Event &evnt);
+
+        void SetWindowName(std::string &windowName);
+
     private:
-        SDL_Window *m_SDL_Window;
+        SDL_Window *m_window;
         int m_screenWidth, m_screenHeight;
+        bool m_isWindowed;
     };
 }

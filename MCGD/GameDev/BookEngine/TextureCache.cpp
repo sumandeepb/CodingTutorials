@@ -20,33 +20,36 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
-
-#include <vector>
+#include <iostream>
+#include "TextureCache.hpp"
+#include "ImageLoader.hpp"
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    TextureCache::TextureCache()
     {
-    public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+    }
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+    TextureCache::~TextureCache()
+    {
+    }
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+    GLTexture TextureCache::GetTexture(std::string texturePath)
+    {
+        // lookup the texture and see if its in the map
+        auto mit = m_textureMap.find(texturePath);
 
-        void Destroy();
+        // check if its not in the map
+        if (mit == m_textureMap.end())
+        {
+            // Load the texture
+            GLTexture newTexture = ImageLoader::LoadPNG(texturePath);
 
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
-    };
+            // Insert it into the map
+            m_textureMap.insert(make_pair(texturePath, newTexture));
+
+            return newTexture;
+        }
+        return mit->second;
+    }
 }

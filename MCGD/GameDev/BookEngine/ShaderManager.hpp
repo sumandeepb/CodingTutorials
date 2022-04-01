@@ -22,31 +22,38 @@
 
 #pragma once
 
-#include <vector>
+#include <string>
+#include <GL/glew.h>
 
 namespace BookEngine
 {
-    class IGame;
-    class IScreen;
-
-    class ScreenList
+    // This class handles the compilation, linking, and usage of a GLSL shader program.
+    // Reference: http://www.opengl.org/wiki/Shader_Compilation
+    class ShaderManager
     {
     public:
-        ScreenList(IGame *game);
-        ~ScreenList();
+        ShaderManager();
+        ~ShaderManager();
 
-        IScreen *MoveToNext();
-        IScreen *MoveToPrevious();
+        void CompileShaders(const std::string &vertexShaderFilePath, const std::string &fragmentShaderFilepath);
 
-        IScreen *GetCurrent();
-        void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        void LinkShaders();
 
-        void Destroy();
+        void AddAttribute(const std::string &attributeName);
 
-    protected:
-        IGame *m_game = nullptr;
-        std::vector<IScreen *> m_screens;
-        int m_currentScreenIndex = -1;
+        GLint GetUniformLocation(const std::string &uniformName);
+
+        void Use();
+        void UnUse();
+
+    private:
+        int m_numAttributes;
+
+        void CompileShader(const std::string &filePath, GLuint id);
+
+        GLuint m_programID;
+
+        GLuint m_vertexShaderID;
+        GLuint m_fragmentShaderID;
     };
 }
