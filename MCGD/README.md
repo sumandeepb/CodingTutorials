@@ -34,3 +34,52 @@ Generates executable binary(.bin) file with linking to shared library.
 g++ -L. -o main.bin main.cpp -lhello
 ```
 Note: Before you run the executable, you need to add the shared library file to any location covered by env LD_LIBRARY_PATH.
+# Setup Dependencies
+## Checking for Graphics Processor
+The following command will tell you about the graphics processor in your system.
+```
+sudo lshw -C display
+```
+## Installing OpenGL Development Pre-requisites
+```
+sudo add-apt-repository ppa:oibaf/graphics-drivers -y
+sudo apt update
+sudo apt install build-essential g++ binutils cmake \
+    libglu1-mesa-dev mesa-common-dev mesa-utils freeglut3-dev \
+    libglew-dev glew-utils libglm-dev libglfw3-dev
+```
+## Checking for OpenGL Support Version
+The following command shows version information of all OpenGL components installed on your system.
+```
+glxinfo -B
+```
+## Installing SFML(Simple and Fast Multimedia Library) on Ubuntu
+```
+sudo apt install libsfml-dev libsfml-doc
+```
+For more information visit https://www.sfml-dev.org/tutorials/2.5/start-linux.php
+
+Also, to link sfml library into your code use 'pkg-config --libs sfml-all' along with your g++ command.
+## Install SDL(Simple DirectMedia Layer) on Ubuntu
+```
+sudo apt install libsdl2-dev libsdl2-doc
+```
+For more information visit https://wiki.libsdl.org/FrontPage
+## Set Environment Variables
+Add the following line to ~/.bashrc
+```
+echo export LIBGL_ALWAYS_INDIRECT=0 >> ~/.bashrc
+source ~/.bashrc
+```
+# Build and Run Project
+## Build Project using CMAKE
+```
+cd build
+cmake ..
+cmake --build .
+```
+## Run Example Project
+```
+cd build
+./Example/Example
+```
