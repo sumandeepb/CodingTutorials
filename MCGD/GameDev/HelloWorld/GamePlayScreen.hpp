@@ -20,28 +20,33 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "App.hpp"
-#include <BookEngine/ScreenList.hpp>
+#pragma once
 
-App::App()
-{
-}
+#include <BookEngine/IScreen.hpp>
 
-App::~App()
+class GameplayScreen : public BookEngine::IScreen
 {
-}
+public:
+    GameplayScreen();
+    ~GameplayScreen();
 
-void App::OnInit()
-{
-}
+    // Inherited via IGameScreen
+    virtual void Build() override;
 
-void App::OnExit()
-{
-}
+    virtual void Destroy() override;
 
-void App::AddScreens()
-{
-    m_gameplayScreen = std::make_unique<GameplayScreen>();
-    m_screenList->AddScreen(m_gameplayScreen.get()); // get underlining pointer
-    m_screenList->SetCurrentScreen(m_gameplayScreen->GetScreenIndex());
-}
+    virtual void OnEntry() override;
+
+    virtual void OnExit() override;
+
+    virtual void Update(float deltaTime) override;
+
+    virtual void Draw() override;
+
+    virtual int GetNextScreenIndex() const override;
+
+    virtual int GetPreviousScreenIndex() const override;
+
+private:
+    void CheckInput();
+};

@@ -2,7 +2,7 @@
 
 namespace BookEngine
 {
-	IGUILabel::IGUILabel(glm::vec4 &bounds, glm::vec2 &position, std::string text, SpriteFont *font, glm::vec2 &fontScale, IGUIPanel *panel) : m_labelText(text),
+	IGUILabel::IGUILabel(glm::vec4 &bounds, glm::vec2 &position, std::string text, SpriteFont *font, const glm::vec2 &fontScale, IGUIPanel *panel) : m_labelText(text),
 																																			   m_spriteFont(font),
 																																			   m_fontScale(fontScale),
 																																			   m_panel(panel)
@@ -41,7 +41,7 @@ namespace BookEngine
 	{
 		glDepthMask(GL_FALSE);
 		char buffer[256];
-		sprintf_s(buffer, m_labelText.c_str());
+		snprintf(buffer, sizeof(buffer), "%s", m_labelText.c_str());
 		m_spriteFont->Draw(spriteBatch, buffer, glm::vec2(m_position.x + (m_bounds.z * 0.5f), (m_position.y + (m_bounds.w * 0.5f)) - ((m_spriteFont->GetFontHeight() * m_fontScale.y) * 0.5f)),
 						   m_fontScale, 0.2f, BookEngine::ColorRGBA8(255, 255, 255, 255), Justification::MIDDLE);
 	}

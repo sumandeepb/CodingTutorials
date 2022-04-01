@@ -1,5 +1,6 @@
 #include "NetherConnector.hpp"
 
+/*
 NetherConnector::NetherConnector()
 {
 }
@@ -24,3 +25,4 @@ pplx::task<void> NetherConnector::RequestTask()
 		// Write response body into the file.
 		// return response.body().read_to_end(fileStream->streambuf()); });
 }
+*/

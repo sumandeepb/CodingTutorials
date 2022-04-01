@@ -20,7 +20,7 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include "IGame.hpp"
 #include "IScreen.hpp"
 #include "ScreenList.hpp"
@@ -120,7 +120,7 @@ namespace BookEngine
             return false;
         }
         else
-            m_window.Create("Example Code", closest.w, closest.h, 8);
+            m_window.Create("Hello World", closest.w, closest.h, 8);
         // m_window.Create("Miss Kwirk", 1280, 720, 8);
         return true;
     }

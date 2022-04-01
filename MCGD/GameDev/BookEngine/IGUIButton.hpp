@@ -13,8 +13,8 @@ namespace BookEngine
 	class IGUIButton : public IGUIObject
 	{
 	public:
-		IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, std::vector<GLTexture *> textures, SpriteFont *font, glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
-		IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, GLTexture *texture, SpriteFont *font, glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
+		IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, std::vector<GLTexture *> textures, SpriteFont *font, const glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
+		IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, GLTexture *texture, SpriteFont *font, const glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
 		~IGUIButton();
 
 		virtual void Update() override;

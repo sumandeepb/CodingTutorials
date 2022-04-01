@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cpprest/http_client.h>
+/* #include <cpprest/http_client.h>
 
 class NetherConnector
 {
@@ -10,3 +10,4 @@ public:
 
 	pplx::task<void> RequestTask();
 };
+*/

@@ -12,7 +12,7 @@ namespace BookEngine
 	class IGUILabel : public IGUIObject
 	{
 	public:
-		IGUILabel(glm::vec4 &bounds, glm::vec2 &position, std::string text, SpriteFont *font, glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
+		IGUILabel(glm::vec4 &bounds, glm::vec2 &position, std::string text, SpriteFont *font, const glm::vec2 &fontScale = glm::vec2(1.0f), IGUIPanel *panel = NULL);
 		~IGUILabel();
 
 		virtual void Update() override;

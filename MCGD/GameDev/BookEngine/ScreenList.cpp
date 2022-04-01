@@ -73,7 +73,7 @@ namespace BookEngine
         m_currentScreenIndex = nextScreen;
     }
 
-    void ScreenList::AddScreen(IScreen *newScreen)
+    void ScreenList::Add(IScreen *newScreen)
     {
         newScreen->m_screenIndex = m_screens.size();
         m_screens.push_back(newScreen);

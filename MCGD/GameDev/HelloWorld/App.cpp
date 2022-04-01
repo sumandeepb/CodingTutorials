@@ -20,64 +20,28 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
-#include <SDL.h>
-#include "GameplayScreen.hpp"
-#include <BookEngine/IGame.hpp>
+#include "App.hpp"
+#include <BookEngine/ScreenList.hpp>
 
-GameplayScreen::GameplayScreen()
+App::App()
 {
 }
 
-GameplayScreen::~GameplayScreen()
+App::~App()
 {
 }
 
-void GameplayScreen::Build()
+void App::OnInit()
 {
 }
 
-void GameplayScreen::Destroy()
+void App::OnExit()
 {
 }
 
-void GameplayScreen::OnEntry()
+void App::AddScreens()
 {
-    std::cout << "OnEntry\n";
-}
-
-void GameplayScreen::OnExit()
-{
-}
-
-void GameplayScreen::Update()
-{
-    // std::cout << "Update\n";
-    CheckInput();
-}
-
-void GameplayScreen::Draw()
-{
-    // std::cout << "Draw\n";
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-int GameplayScreen::GetNextScreenIndex() const
-{
-    return SCREENINDEX_NO_SCREEN;
-}
-
-int GameplayScreen::GetPreviousScreenIndex() const
-{
-    return SCREENINDEX_NO_SCREEN;
-}
-
-void GameplayScreen::CheckInput()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        m_game->OnSDLEvent(event);
-    }
+    m_gameplayScreen = std::make_unique<GameplayScreen>();
+    m_screenList->Add(m_gameplayScreen.get()); // get underlining pointer
+    m_screenList->SetCurrent(m_gameplayScreen->GetScreenIndex());
 }

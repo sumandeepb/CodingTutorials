@@ -38,8 +38,8 @@ namespace BookEngine
 		SkyBox();
 		~SkyBox();
 
-		void SkyBox::Init(std::string front, std::string back, std::string top,
-						  std::string bottom, std::string left, std::string right, std::string vertShader, std::string fragShader);
+		void Init(std::string front, std::string back, std::string top, std::string bottom,
+			std::string left, std::string right, std::string vertShader, std::string fragShader);
 
 		void Draw(Camera3D *camera);
 

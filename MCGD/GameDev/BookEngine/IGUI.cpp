@@ -119,6 +119,7 @@ namespace BookEngine
 			return m_BL;
 			break;
 		case (GUIAnchorPos::Center):
+		default:
 			m_C->y -= bounds.w;
 			return m_C;
 			break;

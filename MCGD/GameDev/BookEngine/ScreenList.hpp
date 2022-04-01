@@ -40,7 +40,7 @@ namespace BookEngine
 
         IScreen *GetCurrent();
         void SetCurrent(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        void Add(IScreen *newScreen);
 
         void Destroy();
 

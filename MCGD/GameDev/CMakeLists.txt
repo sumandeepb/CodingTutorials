@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(ExampleCode)
+project(ExampleCodes)
 
 add_subdirectory(BookEngine)
-add_subdirectory(Example)
+add_subdirectory(HelloWorld)

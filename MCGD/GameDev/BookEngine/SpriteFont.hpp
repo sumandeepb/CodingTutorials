@@ -62,7 +62,7 @@ namespace BookEngine
         /// Destroys the font resources
         void dispose();
 
-        int getFontHeight() const
+        int GetFontHeight() const
         {
             return _fontHeight;
         }

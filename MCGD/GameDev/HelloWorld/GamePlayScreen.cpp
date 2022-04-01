@@ -20,33 +20,64 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+#include <iostream>
+#include <SDL.h>
+#include "GameplayScreen.hpp"
+#include <BookEngine/IGame.hpp>
 
-#include <BookEngine/IScreen.hpp>
-
-class GameplayScreen : public BookEngine::IScreen
+GameplayScreen::GameplayScreen()
 {
-public:
-    GameplayScreen();
-    ~GameplayScreen();
+}
 
-    // Inherited via IGameScreen
-    virtual void Build() override;
+GameplayScreen::~GameplayScreen()
+{
+}
 
-    virtual void Destroy() override;
+void GameplayScreen::Build()
+{
+}
 
-    virtual void OnEntry() override;
+void GameplayScreen::Destroy()
+{
+}
 
-    virtual void OnExit() override;
+void GameplayScreen::OnEntry()
+{
+    // std::cout << "OnEntry\n";
+}
 
-    virtual void Update() override;
+void GameplayScreen::OnExit()
+{
+}
 
-    virtual void Draw() override;
+void GameplayScreen::Update(float deltaTime)
+{
+    // std::cout << "Update\n";
+    CheckInput();
+}
 
-    virtual int GetNextScreenIndex() const override;
+void GameplayScreen::Draw()
+{
+    // std::cout << "Draw\n";
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
 
-    virtual int GetPreviousScreenIndex() const override;
+int GameplayScreen::GetNextScreenIndex() const
+{
+    return SCREENINDEX_NO_SCREEN;
+}
 
-private:
-    void CheckInput();
-};
+int GameplayScreen::GetPreviousScreenIndex() const
+{
+    return SCREENINDEX_NO_SCREEN;
+}
+
+void GameplayScreen::CheckInput()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
+    {
+        m_game->OnSDLEvent(event);
+    }
+}

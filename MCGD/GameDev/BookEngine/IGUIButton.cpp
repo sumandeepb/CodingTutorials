@@ -2,7 +2,7 @@
 
 namespace BookEngine
 {
-	IGUIButton::IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, std::vector<GLTexture *> textures, SpriteFont *font, glm::vec2 &fontScale, IGUIPanel *panel) :
+	IGUIButton::IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, std::vector<GLTexture *> textures, SpriteFont *font, const glm::vec2 &fontScale, IGUIPanel *panel) :
 
 																																													 m_textures(textures),
 																																													 m_buttonLabel(label),
@@ -32,7 +32,7 @@ namespace BookEngine
 		}
 	}
 
-	IGUIButton::IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, GLTexture *texture, SpriteFont *font, glm::vec2 &fontScale, IGUIPanel *panel) : m_texture(*texture),
+	IGUIButton::IGUIButton(glm::vec4 &bounds, glm::vec2 &position, std::string label, GLTexture *texture, SpriteFont *font, const glm::vec2 &fontScale, IGUIPanel *panel) : m_texture(*texture),
 																																									  m_buttonLabel(label),
 																																									  m_spriteFont(font),
 																																									  m_fontScale(fontScale),
@@ -85,7 +85,7 @@ namespace BookEngine
 		spriteBatch.Draw(glm::vec4(m_position.x, m_position.y, m_bounds.z, m_bounds.w), uvRect, m_texture.id, 0.0f, ColorRGBA8(255, 255, 255, 255));
 
 		char buffer[256];
-		sprintf_s(buffer, m_buttonLabel.c_str());
+		snprintf(buffer, sizeof(buffer), "%s", m_buttonLabel.c_str());
 		m_spriteFont->Draw(spriteBatch, buffer, glm::vec2(m_position.x + (m_bounds.z * 0.5f), (m_position.y + (m_bounds.w * 0.5f)) - ((m_spriteFont->GetFontHeight() * m_fontScale.y) * 0.5f)),
 						   m_fontScale, 0.2f, BookEngine::ColorRGBA8(255, 255, 255, 255), Justification::MIDDLE);
 		// glDepthMask(GL_TRUE);

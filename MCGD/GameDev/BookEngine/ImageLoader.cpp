@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <string>
+#include <cstring>
 #include "ImageLoader.hpp"
 #include "PNGDecoder.hpp"
 #include "IOManager.hpp"

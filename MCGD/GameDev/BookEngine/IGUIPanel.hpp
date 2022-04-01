@@ -6,7 +6,8 @@
 
 namespace BookEngine
 {
-	static enum class GUIAnchorPos {
+	/*static*/
+	enum class GUIAnchorPos {
 		TopRight,
 		TopLeft,
 		BottomRight,
