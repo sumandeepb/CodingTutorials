@@ -27,7 +27,6 @@
 
 namespace BookEngine
 {
-
     // Input manager stores a key map that maps SDL_Keys to booleans.
     // If the value in the key map is true, then the key is pressed.
     // Otherwise, it is released.
@@ -39,16 +38,20 @@ namespace BookEngine
 
         void Update();
 
-        void KeyPress(unsigned int keyID); // TODO: wrap in SDL Keys in engine local enum
+        void KeyPress(unsigned int keyID);
         void KeyRelease(unsigned int keyID);
 
-        bool isKeyDown(unsigned int keyID);    // Returns true if key is held
-        bool isKeyPressed(unsigned int keyID); // Returns true if key was pressed this update
+        // Returns true if the key is held down
+        bool isKeyDown(unsigned int keyID);
+
+        // Returns true if the key was just pressed
+        bool isKeyPressed(unsigned int keyID);
 
         void SetMouseCoords(float x, float y);
-        glm::vec2 GetMouseCoords() const { return m_mouseCoords; };
+        glm::vec2 GetMouseCoords() const { return m_mouseCoords; }
 
     private:
+        // Returns true if the key is held down
         bool wasKeyDown(unsigned int keyID);
 
         std::unordered_map<unsigned int, bool> m_keyMap;

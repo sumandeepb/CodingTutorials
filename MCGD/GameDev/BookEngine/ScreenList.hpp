@@ -35,12 +35,12 @@ namespace BookEngine
         ScreenList(IGame *game);
         ~ScreenList();
 
-        IScreen *MoveToNextScreen();
-        IScreen *MoveToPreviousScreen();
+        IScreen *MoveToNext();
+        IScreen *MoveToPrevious();
 
-        IScreen *GetCurrentScreen();
-        void SetCurrentScreen(int nextScreen);
-        void AddScreen(IScreen *newScreen);
+        IScreen *GetCurrent();
+        void SetCurrent(int nextScreen);
+        void Add(IScreen *newScreen);
 
         void Destroy();
 

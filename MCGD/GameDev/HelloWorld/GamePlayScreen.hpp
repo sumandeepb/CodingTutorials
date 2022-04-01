@@ -20,36 +20,33 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#pragma once
 
-namespace BookEngine
+#include <BookEngine/IScreen.hpp>
+
+class GameplayScreen : public BookEngine::IScreen
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
-    {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
-        {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
-        }
+public:
+    GameplayScreen();
+    ~GameplayScreen();
 
-        // seek to the end
-        file.seekg(0, std::ios::end);
+    // Inherited via IGameScreen
+    virtual void Build() override;
 
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
+    virtual void Destroy() override;
 
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
+    virtual void OnEntry() override;
 
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
+    virtual void OnExit() override;
 
-        return true;
-    }
-}
+    virtual void Update(float deltaTime) override;
+
+    virtual void Draw() override;
+
+    virtual int GetNextScreenIndex() const override;
+
+    virtual int GetPreviousScreenIndex() const override;
+
+private:
+    void CheckInput();
+};

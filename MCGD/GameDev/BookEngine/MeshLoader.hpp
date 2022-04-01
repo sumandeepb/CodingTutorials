@@ -20,64 +20,13 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
-#include <SDL.h>
-#include "GameplayScreen.hpp"
-#include <BookEngine/IGame.hpp>
+#pragma once
 
-GameplayScreen::GameplayScreen()
+namespace BookEngine
 {
-}
-
-GameplayScreen::~GameplayScreen()
-{
-}
-
-void GameplayScreen::Build()
-{
-}
-
-void GameplayScreen::Destroy()
-{
-}
-
-void GameplayScreen::OnEntry()
-{
-    std::cout << "OnEntry\n";
-}
-
-void GameplayScreen::OnExit()
-{
-}
-
-void GameplayScreen::Update()
-{
-    // std::cout << "Update\n";
-    CheckInput();
-}
-
-void GameplayScreen::Draw()
-{
-    // std::cout << "Draw\n";
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-int GameplayScreen::GetNextScreenIndex() const
-{
-    return SCREENINDEX_NO_SCREEN;
-}
-
-int GameplayScreen::GetPreviousScreenIndex() const
-{
-    return SCREENINDEX_NO_SCREEN;
-}
-
-void GameplayScreen::CheckInput()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        m_game->OnSDLEvent(event);
-    }
+    bool LoadOBJ(
+        const std::string path,
+        std::vector<glm::vec3> &out_vertices,
+        std::vector<glm::vec2> &out_uvs,
+        std::vector<glm::vec3> &out_normals);
 }

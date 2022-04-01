@@ -20,36 +20,64 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#include <iostream>
+#include <SDL.h>
+#include "GameplayScreen.hpp"
+#include <BookEngine/IGame.hpp>
 
-namespace BookEngine
+GameplayScreen::GameplayScreen()
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+}
+
+GameplayScreen::~GameplayScreen()
+{
+}
+
+void GameplayScreen::Build()
+{
+}
+
+void GameplayScreen::Destroy()
+{
+}
+
+void GameplayScreen::OnEntry()
+{
+    // std::cout << "OnEntry\n";
+}
+
+void GameplayScreen::OnExit()
+{
+}
+
+void GameplayScreen::Update(float deltaTime)
+{
+    // std::cout << "Update\n";
+    CheckInput();
+}
+
+void GameplayScreen::Draw()
+{
+    // std::cout << "Draw\n";
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+int GameplayScreen::GetNextScreenIndex() const
+{
+    return SCREENINDEX_NO_SCREEN;
+}
+
+int GameplayScreen::GetPreviousScreenIndex() const
+{
+    return SCREENINDEX_NO_SCREEN;
+}
+
+void GameplayScreen::CheckInput()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
     {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
-        {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
-        }
-
-        // seek to the end
-        file.seekg(0, std::ios::end);
-
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
-
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
-
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
-
-        return true;
+        m_game->OnSDLEvent(event);
     }
 }

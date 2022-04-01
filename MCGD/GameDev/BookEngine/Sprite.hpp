@@ -20,36 +20,33 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#pragma once
+
+#include <string>
+#include <GL/glew.h>
+#include "GLTexture.hpp"
 
 namespace BookEngine
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+    // A 2D quad that can be rendered to the screen
+    class Sprite
     {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
-        {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
-        }
+    public:
+        Sprite();
+        ~Sprite();
 
-        // seek to the end
-        file.seekg(0, std::ios::end);
+        void Init(float x, float y, float width, float height, std::string texturePath);
 
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
+        void Draw();
 
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
+        // private:
+        float _x;
+        float _y;
+        float _width;
+        float _height;
 
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
-
-        return true;
-    }
+        GLuint m_vao;
+        GLuint _vboID;
+        GLTexture _texture;
+    };
 }

@@ -32,7 +32,7 @@ namespace BookEngine
     {
         NONE,
         RUNNING,
-        EXIT_APP,
+        EXIT_APPLICATION,
         CHANGE_NEXT,
         CHANGE_PREVIOUS
     };
@@ -42,21 +42,26 @@ namespace BookEngine
     public:
         friend class ScreenList;
 
-        IScreen(){
+        IScreen()
+        {
+            // Empty
+        }
 
-        };
-        virtual ~IScreen(){
+        virtual ~IScreen()
+        {
+            // Empty
+        }
 
-        };
-
-        // Called on beginning and end of app
-        virtual void Build() = 0; // pure virtual (makes it a must to inherit)
+        // Called at beginning and end of application
+        virtual void Build() = 0;
         virtual void Destroy() = 0;
 
+        // Called when a screen enters and exits focus
         virtual void OnEntry() = 0;
         virtual void OnExit() = 0;
 
-        virtual void Update() = 0;
+        // Called in the main game loop
+        virtual void Update(float deltaTime) = 0;
         virtual void Draw() = 0;
 
         void Run()
@@ -64,20 +69,22 @@ namespace BookEngine
             m_currentState = ScreenState::RUNNING;
         }
 
-        // Return the current screen index
+        // Gets the index of the current screen
         int GetScreenIndex() const
         {
             return m_screenIndex;
         }
 
-        ScreenState GetScreenState() const
+        ScreenState GetState() const
         {
             return m_currentState;
         }
 
+        // Return the index of the next or previous screen when changing screens
         virtual int GetNextScreenIndex() const = 0;
         virtual int GetPreviousScreenIndex() const = 0;
 
+        // Sets m_game to the parent game
         void SetParentGame(IGame *game)
         {
             m_game = game;
@@ -87,7 +94,5 @@ namespace BookEngine
         ScreenState m_currentState = ScreenState::NONE;
         IGame *m_game = nullptr;
         int m_screenIndex = -1;
-
-    private:
     };
 }

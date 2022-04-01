@@ -20,6 +20,7 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <GL/glew.h>
 #include "IGame.hpp"
 #include "IScreen.hpp"
 #include "ScreenList.hpp"
@@ -34,6 +35,7 @@ namespace BookEngine
 
     IGame::~IGame()
     {
+        // Empty
     }
 
     void IGame::Run()
@@ -46,30 +48,32 @@ namespace BookEngine
 
         m_isRunning = true;
 
-        /// Game Loop
+        // Game loop
         while (m_isRunning)
         {
             fpsLimiter.Begin();
 
+            // Call the custom update and draw method
             m_inputManager.Update();
 
             Update();
             Draw();
 
+            m_deltaTime = fpsLimiter.deltaTime;
             m_fps = fpsLimiter.End();
 
             m_window.SwapBuffer();
         }
     }
 
-    void IGame::ExitGame()
+    void IGame::Exit()
     {
         m_currentScreen->OnExit();
 
         if (m_screenList)
         {
             m_screenList->Destroy();
-            m_screenList.reset(); // Free memory
+            m_screenList.reset();
         }
 
         m_isRunning = false;
@@ -81,15 +85,43 @@ namespace BookEngine
 
         SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-        m_window.Create("BookEngine", 1024, 768, 0);
+        if (!InitSystems())
+        {
+            return false;
+        }
 
         OnInit();
 
         AddScreens();
-        m_currentScreen = m_screenList->GetCurrentScreen();
+
+        m_currentScreen = m_screenList->GetCurrent();
         m_currentScreen->OnEntry();
         m_currentScreen->Run();
 
+        return true;
+    }
+
+    bool IGame::InitSystems()
+    {
+        SDL_DisplayMode target, closest;
+
+        target.w = 1024;
+        target.h = 768;
+        target.format = 0;
+        target.refresh_rate = 0; // don't care
+        target.driverdata = 0;   // initialize to 0
+
+        // Pass the display mode structures by reference to SDL_GetClosestDisplay
+        // and check whether the result is a null pointer.
+        if (SDL_GetClosestDisplayMode(0, &target, &closest) == NULL)
+        {
+            // If the returned pointer is null, no match was found.
+            printf("\nNo suitable display mode was found!\n\n");
+            return false;
+        }
+        else
+            m_window.Create("Hello World", closest.w, closest.h, 8);
+        // m_window.Create("Miss Kwirk", 1280, 720, 8);
         return true;
     }
 
@@ -97,14 +129,14 @@ namespace BookEngine
     {
         if (m_currentScreen)
         {
-            switch (m_currentScreen->GetScreenState())
+            switch (m_currentScreen->GetState())
             {
             case ScreenState::RUNNING:
-                m_currentScreen->Update();
+                m_currentScreen->Update(m_deltaTime);
                 break;
             case ScreenState::CHANGE_NEXT:
                 m_currentScreen->OnExit();
-                m_currentScreen = m_screenList->MoveToNextScreen();
+                m_currentScreen = m_screenList->MoveToNext();
 
                 if (m_currentScreen)
                 {
@@ -114,7 +146,7 @@ namespace BookEngine
                 break;
             case ScreenState::CHANGE_PREVIOUS:
                 m_currentScreen->OnExit();
-                m_currentScreen = m_screenList->MoveToPreviousScreen();
+                m_currentScreen = m_screenList->MoveToPrevious();
 
                 if (m_currentScreen)
                 {
@@ -122,8 +154,8 @@ namespace BookEngine
                     m_currentScreen->OnEntry();
                 }
                 break;
-            case ScreenState::EXIT_APP:
-                ExitGame();
+            case ScreenState::EXIT_APPLICATION:
+                Exit();
                 break;
             default:
                 break;
@@ -131,19 +163,14 @@ namespace BookEngine
         }
         else
         {
-            // we have no screen so exit
-            ExitGame();
+            Exit();
         }
     }
 
     void IGame::Draw()
     {
-        // For safety
         glViewport(0, 0, m_window.GetScreenWidth(), m_window.GetScreenHeight());
-
-        // Check if we have a screen and that the screen is running
-        if (m_currentScreen &&
-            m_currentScreen->GetScreenState() == ScreenState::RUNNING)
+        if (m_currentScreen && m_currentScreen->GetState() == ScreenState::RUNNING)
         {
             m_currentScreen->Draw();
         }

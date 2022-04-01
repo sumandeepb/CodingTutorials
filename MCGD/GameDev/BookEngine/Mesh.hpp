@@ -20,36 +20,34 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#pragma once
+
+#include <vector>
+#include <string>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include "GLTexture.hpp"
 
 namespace BookEngine
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+    class Mesh
     {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
-        {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
-        }
+    public:
+        Mesh();
+        ~Mesh();
 
-        // seek to the end
-        file.seekg(0, std::ios::end);
+        void Init(std::string pathToMesh, std::string pathToTexture);
 
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
+        void Draw();
 
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
+    private:
+        GLuint m_vao;
+        GLuint m_vertexbuffer;
+        GLuint m_uvbuffer;
+        GLTexture m_texture;
 
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
-
-        return true;
-    }
+        std::vector<glm::vec3> m_vertices;
+        std::vector<glm::vec2> m_uvs;
+        std::vector<glm::vec3> m_normals;
+    };
 }

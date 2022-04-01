@@ -20,36 +20,28 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#pragma once
+
+#include <vector>
 
 namespace BookEngine
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+    class ParticleBatch2D;
+    class SpriteBatch;
+
+    class ParticleManager2D
     {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
-        {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
-        }
+    public:
+        ParticleManager2D();
+        ~ParticleManager2D();
 
-        // seek to the end
-        file.seekg(0, std::ios::end);
+        // ParticleManager is responsible for cleaning up allocations
+        void CreateParticleBatch(ParticleBatch2D *particleBatch);
 
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
+        void Update(float deltaTime);
+        void Draw(SpriteBatch *spriteBatch);
 
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
-
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
-
-        return true;
-    }
+    private:
+        std::vector<ParticleBatch2D *> m_batches;
+    };
 }

@@ -20,28 +20,19 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "App.hpp"
-#include <BookEngine/ScreenList.hpp>
+#pragma once
 
-App::App()
-{
-}
+#include "GLTexture.hpp"
 
-App::~App()
-{
-}
+#include <string>
 
-void App::OnInit()
+namespace BookEngine
 {
-}
-
-void App::OnExit()
-{
-}
-
-void App::AddScreens()
-{
-    m_gameplayScreen = std::make_unique<GameplayScreen>();
-    m_screenList->AddScreen(m_gameplayScreen.get()); // get underlining pointer
-    m_screenList->SetCurrentScreen(m_gameplayScreen->GetScreenIndex());
+    // Loads images into GLTextures
+    class ImageLoader
+    {
+    public:
+        static GLTexture LoadPNG(std::string filePath);
+        static GLTexture LoadDDS(const char *imagepath);
+    };
 }

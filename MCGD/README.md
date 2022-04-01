@@ -62,12 +62,24 @@ For more information visit https://www.sfml-dev.org/tutorials/2.5/start-linux.ph
 Also, to link sfml library into your code use 'pkg-config --libs sfml-all' along with your g++ command.
 ## Install SDL(Simple DirectMedia Layer) on Ubuntu
 ```
-sudo apt install libsdl2-dev libsdl2-doc
+sudo apt install libsdl2-dev libsdl2-doc \
+    libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev libsdl2-mixer-dev libsdl2-net-dev
 ```
 For more information visit https://wiki.libsdl.org/FrontPage
-## Set Environment Variables
-Add the following line to ~/.bashrc
+## Build and Install Bullet Physics SDK
+Clone or Download github repository https://github.com/bulletphysics/bullet3
+
+Build and install Bullet3 for C++
 ```
+cd bullet3
+./build_cmake_pybullet_double.sh
+cd build_cmake
+sudo make insall
+```
+## Set Environment Variables
+Add environment configs to ~/.bashrc
+```
+echo export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH >> ~/.bashrc
 echo export LIBGL_ALWAYS_INDIRECT=0 >> ~/.bashrc
 source ~/.bashrc
 ```
@@ -78,8 +90,8 @@ cd build
 cmake ..
 cmake --build .
 ```
-## Run Example Project
+## Run Example Projects
 ```
 cd build
-./Example/Example
+./HelloWorld/HelloWorld
 ```

@@ -20,36 +20,36 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <fstream>
-#include "Exception.hpp"
-#include "IOManager.hpp"
+#include <iostream>
+#include "TextureCache.hpp"
+#include "ImageLoader.hpp"
 
 namespace BookEngine
 {
-    bool IOManager::ReadFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+    TextureCache::TextureCache()
     {
-        std::ifstream file(filePath, std::ios::binary);
-        if (file.fail())
+    }
+
+    TextureCache::~TextureCache()
+    {
+    }
+
+    GLTexture TextureCache::GetTexture(std::string texturePath)
+    {
+        // lookup the texture and see if its in the map
+        auto mit = m_textureMap.find(texturePath);
+
+        // check if its not in the map
+        if (mit == m_textureMap.end())
         {
-            perror(filePath.c_str());
-            // TODO: throw Exception("Failure to read file to buffer");
-            return false;
+            // Load the texture
+            GLTexture newTexture = ImageLoader::LoadPNG(texturePath);
+
+            // Insert it into the map
+            m_textureMap.insert(make_pair(texturePath, newTexture));
+
+            return newTexture;
         }
-
-        // seek to the end
-        file.seekg(0, std::ios::end);
-
-        // Get the file size
-        unsigned int fileSize = (unsigned int)file.tellg();
-        file.seekg(0, std::ios::beg);
-
-        // Reduce the file size by any header bytes that might be present
-        fileSize -= (unsigned int)file.tellg();
-
-        buffer.resize(fileSize);
-        file.read((char *)&(buffer[0]), fileSize);
-        file.close();
-
-        return true;
+        return mit->second;
     }
 }

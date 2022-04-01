@@ -22,31 +22,38 @@
 
 #pragma once
 
-#include <BookEngine/IScreen.hpp>
+#include <string>
+#include <GL/glew.h>
 
-class GameplayScreen : public BookEngine::IScreen
+namespace BookEngine
 {
-public:
-    GameplayScreen();
-    ~GameplayScreen();
+    // This class handles the compilation, linking, and usage of a GLSL shader program.
+    // Reference: http://www.opengl.org/wiki/Shader_Compilation
+    class ShaderManager
+    {
+    public:
+        ShaderManager();
+        ~ShaderManager();
 
-    // Inherited via IGameScreen
-    virtual void Build() override;
+        void CompileShaders(const std::string &vertexShaderFilePath, const std::string &fragmentShaderFilepath);
 
-    virtual void Destroy() override;
+        void LinkShaders();
 
-    virtual void OnEntry() override;
+        void AddAttribute(const std::string &attributeName);
 
-    virtual void OnExit() override;
+        GLint GetUniformLocation(const std::string &uniformName);
 
-    virtual void Update() override;
+        void Use();
+        void UnUse();
 
-    virtual void Draw() override;
+    private:
+        int m_numAttributes;
 
-    virtual int GetNextScreenIndex() const override;
+        void CompileShader(const std::string &filePath, GLuint id);
 
-    virtual int GetPreviousScreenIndex() const override;
+        GLuint m_programID;
 
-private:
-    void CheckInput();
-};
+        GLuint m_vertexShaderID;
+        GLuint m_fragmentShaderID;
+    };
+}

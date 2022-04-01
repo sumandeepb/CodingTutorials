@@ -22,43 +22,51 @@
 
 #pragma once
 
-#include <string>
-#include <SDL.h>
-#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace BookEngine
 {
-    enum WindowFlags
-    {
-        INVISIBLE = 0x1,
-        FULLSCREEN = 0x2,
-        BORDERLESS = 0x4,
-        RESIZABLE = 0x8,
-        FULLSCREEN_DESKTOP = 0x16
-    };
-
-    class Window
+    // Camera class for 2D games
+    class Camera2D
     {
     public:
-        Window();
-        ~Window();
+        Camera2D();
+        ~Camera2D();
 
-        int Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags);
+        // sets up the orthographic matrix and screen dimensions
+        void Init(int screenWidth, int screenHeight);
 
-        void SwapBuffer();
+        // updates the camera matrix if needed
+        void Update();
 
-        int GetScreenWidth() { return m_screenWidth; }
-        int GetScreenHeight() { return m_screenHeight; }
+        glm::vec2 ConvertScreenToWorld(glm::vec2 screenCoords);
 
-        void ToggleFullScreen();
+        bool InView(const glm::vec2 &position, const glm::vec2 &dimensions);
 
-        void OnWindowEvent(SDL_Event &evnt);
+        // setters
+        void SetPosition(const glm::vec2 &newPosition)
+        {
+            m_position = newPosition;
+            m_needsMatrixUpdate = true;
+        }
+        void SetScale(float newScale)
+        {
+            m_scale = newScale;
+            m_needsMatrixUpdate = true;
+        }
 
-        void SetWindowName(std::string &windowName);
+        // getters
+        glm::vec2 GetPosition() { return m_position; }
+        float GetScale() { return m_scale; }
+        glm::mat4 GetCameraMatrix() { return m_cameraMatrix; }
 
     private:
-        SDL_Window *m_window;
         int m_screenWidth, m_screenHeight;
-        bool m_isWindowed;
+        bool m_needsMatrixUpdate;
+        float m_scale;
+        glm::vec2 m_position;
+        glm::mat4 m_cameraMatrix;
+        glm::mat4 m_orthoMatrix;
     };
 }
