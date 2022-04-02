@@ -4,3 +4,4 @@ project(ExampleCodes)
 
 add_subdirectory(BookEngine)
 add_subdirectory(HelloWorld)
+add_subdirectory(SoundExample)
