@@ -39,15 +39,21 @@ namespace BookEngine
 	{
 		// Check if we have already been Initialized
 		if (m_isInitialized)
+		{
 			throw Exception("Audio manager is already Initialized");
+		}
 
 		// Can be Bitwise combination of
 		// MIX_Init_FAC, MIX_Init_MOD, MIX_Init_MP3, MIX_Init_OGG
 		if (Mix_Init(MIX_INIT_OGG || MIX_INIT_MP3) == -1)
+		{
 			throw Exception("SDL_Mixer could not Initialize! Error: " + std::string(Mix_GetError()));
+		}
 
 		if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+		{
 			throw Exception("Mix_OpenAudio Error: " + std::string(Mix_GetError()));
+		}
 
 		m_isInitialized = true;
 	}
@@ -59,11 +65,16 @@ namespace BookEngine
 			m_isInitialized = false;
 
 			// Release the audio resources
-
 			for (auto &iter : m_effectList)
+			{
 				Mix_FreeChunk(iter.second);
+			}
+
 			for (auto &iter : m_musicList)
+			{
 				Mix_FreeMusic(iter.second);
+			}
+
 			Mix_CloseAudio();
 			Mix_Quit();
 		}
@@ -82,7 +93,9 @@ namespace BookEngine
 			Mix_Chunk *chunk = Mix_LoadWAV(filePath.c_str());
 			// Error Loading file
 			if (chunk == nullptr)
+			{
 				throw Exception("Mix_LoadWAV Error: " + std::string(Mix_GetError()));
+			}
 
 			effect.m_chunk = chunk;
 			m_effectList[filePath] = chunk;
@@ -129,13 +142,19 @@ namespace BookEngine
 		// TODO: USE OLDEST CHANNEL THAT IS NOT IN USE FIRST
 		// THIS WILL ERROR IF TOO MANY SOUNDS ARE ATTEMPTED AT ONCE  <-hack fix below
 		if (Mix_PlayChannel(-1, m_chunk, numOfLoops) == -1)
+		{
 			if (Mix_PlayChannel(0, m_chunk, numOfLoops) == -1)
+			{
 				throw Exception("Mix_PlayChannel Error: " + std::string(Mix_GetError()));
+			}
+		}
 	}
 
 	void Music::Play(int numOfLoops)
 	{
 		if (Mix_PlayMusic(m_music, numOfLoops) == -1)
+		{
 			throw Exception("Mix_PlayMusic Error: " + std::string(Mix_GetError()));
+		}
 	}
 }

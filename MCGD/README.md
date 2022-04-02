@@ -88,7 +88,7 @@ source ~/.bashrc
 ```
 cd build
 cmake ..
-cmake --build .
+cmake --build . -j6
 ```
 ## Run Example Projects
 ```

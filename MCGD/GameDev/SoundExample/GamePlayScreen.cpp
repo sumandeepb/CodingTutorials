@@ -45,7 +45,7 @@ void GameplayScreen::Destroy()
 void GameplayScreen::OnEntry()
 {
     m_audioManager.Init();
-    m_bgMusic = m_audioManager.LoadMusic("assets/music/bensound-epic.mp3");
+    m_bgMusic = m_audioManager.LoadMusic("Music/bensound-epic.mp3");
     m_bgMusic.Play();
 }
 
