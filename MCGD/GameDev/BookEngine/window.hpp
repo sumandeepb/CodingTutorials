@@ -54,7 +54,7 @@ namespace BookEngine
 
         void OnWindowEvent(SDL_Event &evnt);
 
-        void SetWindowName(std::string &windowName);
+        void SetWindowName(const std::string &windowName);
 
     private:
         SDL_Window *m_window;

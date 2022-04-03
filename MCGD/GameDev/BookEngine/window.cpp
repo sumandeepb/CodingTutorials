@@ -149,7 +149,7 @@ namespace BookEngine
         }
     }
 
-    void Window::SetWindowName(std::string &windowName)
+    void Window::SetWindowName(const std::string &windowName)
     {
         SDL_SetWindowTitle(m_window, windowName.c_str());
     }

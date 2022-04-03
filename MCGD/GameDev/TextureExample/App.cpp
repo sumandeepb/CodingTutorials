@@ -33,6 +33,7 @@ App::~App()
 
 void App::OnInit()
 {
+    m_window.SetWindowName("Texture Example");
 }
 
 void App::OnExit()

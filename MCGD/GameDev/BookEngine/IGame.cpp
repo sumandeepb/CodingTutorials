@@ -120,8 +120,10 @@ namespace BookEngine
             return false;
         }
         else
-            m_window.Create("Hello World", closest.w, closest.h, 8);
-        // m_window.Create("Miss Kwirk", 1280, 720, 8);
+        {
+            m_window.Create("Book Engine Game", closest.w, closest.h, 8);
+        }
+
         return true;
     }
 
