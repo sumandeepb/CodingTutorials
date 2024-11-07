@@ -21,6 +21,7 @@
 */
 
 #include "Mesh.hpp"
+#include "Logger.hpp"
 #include "MeshLoader.hpp"
 #include "ResourceManager.hpp"
 
@@ -51,6 +52,7 @@ namespace BookEngine
 	{
 		// Read our .obj file
 		bool res = LoadOBJ(pathToMesh, m_vertices, m_uvs, m_normals);
+		WriteLog(LogType::RUN, "Vertices " + std::to_string(m_vertices.size()) + " Textures " + std::to_string(m_uvs.size()) + " Normals " + std::to_string(m_normals.size()));
 
 		// Load Texture
 		m_texture = ResourceManager::GetTexture(pathToTexture);
